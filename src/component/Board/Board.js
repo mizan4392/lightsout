@@ -39,7 +39,7 @@ class Board extends React.Component{
         return board;
     }
     flipCellsAround(coord){
-        console.log("FLIPPING",coord);
+
         let { ncols, nrows } = this.props;
 
         let board = this.state.board;
@@ -48,12 +48,19 @@ class Board extends React.Component{
         function flipCell(y,x){
             //if the corrd is actually on board ,flip it
 
-            if(x => 0 && x < ncols && y >= 0 && y <nrows){
+            if(x >= 0 && x < ncols && y >= 0 && y < nrows){
                 board[y][x] = !board[y][x];
             }
         }
+        //Flip initial cell
+        flipCell(y,x); //flip initial cell
+        flipCell(y,x-1); //flip left
+        flipCell(y,x+1); //flip right
+        flipCell(y-1,x); //flip below
+        flipCell(y+1,x); //flip above
 
-       // this.setState({board,hasWon});
+       let hasWon =  board.every(row => row.every(cell => !cell));
+       this.setState({board:board,hasWon:hasWon});
     }
 
     render(){
@@ -73,12 +80,28 @@ class Board extends React.Component{
         return(
 
             <div>
-                <table className="Board">
-                    <tbody>
-                        {tbleBoard}
-                    </tbody>
-                </table>
+                {this.state.hasWon ? (
+                    <div className="Board-title">
+                        <div className="Winner">
+                            <span className="neon-orange">YOU</span>
+                            <span className="neon-blue">WIN!</span>
+                        </div>  
+                    </div>
+                ) : (
+                <div>
+                    <div className="Board-title">
+                        <div className="neon-orange">LIGHTS</div>
+                        <div className="neon-blue">OUT</div>
+                    </div>
+                    <table className="Board">
+                        <tbody>
+                            {tbleBoard}
+                        </tbody>
+                    </table>
+                 </div>
+                )}
             </div>
+
         )
     }
 

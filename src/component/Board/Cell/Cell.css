@@ -1,11 +1,13 @@
 
 .Cell{
-    background-color: gray;
+    background-color: #263238;
+    transition: background-color .7s ease; 
+    border-radius:2px; 
     width: 70px;
     height: 70px;
 }
 .Cell-lit{
-    background-color: white;
+    background-color:#00bcd4;
     width: 70px;
     height: 70px;
 }
